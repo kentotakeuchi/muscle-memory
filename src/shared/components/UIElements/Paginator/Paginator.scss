@@ -1,0 +1,26 @@
+.paginator {
+  &--product-library,
+  &--post-library,
+  &--products,
+  &--posts {
+    display: grid;
+    row-gap: 5rem;
+  }
+
+  &__control-box {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    column-gap: 2rem;
+    font-family: 'Miller Banner', 'Times New Roman', serif;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  &__number {
+  }
+
+  &__number--active {
+    border-bottom: 1px solid black;
+  }
+}

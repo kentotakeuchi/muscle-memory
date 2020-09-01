@@ -1,0 +1,78 @@
+@import '../../../../scss/variables.scss';
+@import '../../../../scss/mixin.scss';
+
+.nav-links {
+  // TODO: share style
+  line-height: 1.67;
+  letter-spacing: 0.2rem;
+
+  // Main Header
+  &--main-header {
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 5rem;
+  }
+
+  // Main Admin Header
+  &--admin-header {
+    display: grid;
+    row-gap: 2rem;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  // Side Drawer
+  &--side-drawer {
+    display: grid;
+    row-gap: 1rem;
+    margin-bottom: 3rem;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  &--admin-header a {
+    color: #6f6f71;
+  }
+  &--admin-header a.active {
+    color: black;
+  }
+
+  &__logout-btn {
+    font-family: 'Miller Banner', 'Times New Roman', serif;
+    font-size: 13px;
+    text-decoration: underline;
+    text-transform: capitalize;
+    color: #6f6f71;
+  }
+
+  &__logout-btn:hover {
+    opacity: 0.6;
+  }
+
+  &__avatar {
+    position: fixed;
+    top: 5rem;
+    right: 5rem;
+
+    @include respond(phone) {
+      position: static;
+      justify-self: start;
+      margin-top: 2rem;
+    }
+  }
+
+  &--main-footer {
+    display: grid;
+    row-gap: 1rem;
+    height: max-content;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  &--main-footer a {
+    @include respond(phone) {
+      text-decoration: underline;
+    }
+  }
+}

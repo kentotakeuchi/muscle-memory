@@ -1,0 +1,70 @@
+@import '../../../../scss/mixin.scss';
+
+.slider {
+  scroll-snap-type: x mandatory;
+  white-space: nowrap;
+  overflow: auto;
+
+  // featured product > product
+  &--featured-products {
+    display: grid;
+    grid-template-columns: repeat(8, 25%);
+    column-gap: 0.5rem;
+    padding-right: 8rem;
+
+    @include respond(phone) {
+      grid-template-columns: repeat(8, 80%);
+      padding-right: 0;
+    }
+
+    & img {
+      height: 40rem;
+
+      @include respond(phone) {
+        height: 50rem;
+      }
+    }
+  }
+
+  // stores > menu list
+  &--menu-list {
+    &--store {
+      display: grid;
+      margin-top: 1rem;
+
+      @include respond(phone) {
+      }
+    }
+
+    & img {
+      height: 35rem;
+    }
+  }
+
+  // careers > job list
+  &--job-list {
+    display: grid;
+    grid-template-columns: repeat(5, 50%);
+    padding-right: 20rem;
+
+    @include respond(phone) {
+      grid-template-columns: repeat(5, 90%);
+      padding-right: 0;
+    }
+
+    & > li {
+      margin-right: 0.5rem;
+    }
+
+    & img {
+      height: 40rem;
+      object-fit: cover;
+    }
+  }
+
+  &__slide {
+    scroll-snap-align: start;
+    display: inline-block;
+    white-space: normal;
+  }
+}

@@ -1,0 +1,41 @@
+@import '../../../scss/variables.scss';
+
+.reset-form {
+  display: grid;
+  row-gap: 3rem;
+
+  &__head {
+    display: grid;
+    row-gap: 2rem;
+    justify-items: center;
+  }
+
+  &__title {
+    font-size: 33px;
+    text-transform: capitalize;
+  }
+
+  &__instruction {
+    font-family: 'Gotham Light', Arial, Helvetica, sans-serif;
+  }
+
+  &__form {
+    display: grid;
+    row-gap: 3rem;
+  }
+
+  & > a {
+    justify-self: center;
+    width: max-content;
+    font-family: 'Miller Banner', 'Times New Roman', serif;
+    text-decoration: underline;
+  }
+  & > a:hover {
+    text-decoration: none;
+    opacity: 1;
+  }
+
+  &__sent {
+    font-family: 'Gotham Light', Arial, Helvetica, sans-serif;
+  }
+}

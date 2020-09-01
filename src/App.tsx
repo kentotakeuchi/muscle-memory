@@ -1,26 +1,96 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, Suspense } from 'react';
+import {
+  Route,
+  Switch,
+  withRouter,
+  Redirect,
+  RouteComponentProps,
+} from 'react-router-dom';
 
-function App() {
+// CUSTOM COMPONENT
+import LoadingSpinner from './shared/components/UIElements/LoadingSpinner/LoadingSpinner';
+import MainNavigation from './shared/components/Navigation/MainNavigation/MainNavigation';
+
+// CUSTOM CONTEXT & HOOK
+import { AuthContext } from './shared/context/auth-context';
+import { StockContext } from './shared/context/stock-context';
+import { useAuth } from './shared/hooks/auth-hook';
+import { useStock } from './shared/hooks/stock-hook';
+
+// PAGES (UNAUTHORIZED)
+const NewPasswordPage = React.lazy(() =>
+  import('./auth/pages/NewPasswordPage')
+);
+const ResetPage = React.lazy(() => import('./auth/pages/ResetPage'));
+const AuthPage = React.lazy(() => import('./auth/pages/AuthPage'));
+
+// PAGES (AUTHORIZED)
+// const HomePage = React.lazy(() => import('./homePage/pages/HomePage'));
+
+const App = (props: RouteComponentProps): JSX.Element => {
+  const { token, login, logout, user, update } = useAuth();
+  const {
+    stocks,
+    filteredTotalStocks,
+    totalStocks,
+    fetchAllStocks,
+  } = useStock();
+
+  useEffect(() => {
+    token && fetchAllStocks(token);
+  }, [fetchAllStocks, token]);
+
+  let routes;
+
+  if (token) {
+    routes = (
+      <Switch>
+        <Route path="/" component={AuthPage} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/reset/:resetToken" component={NewPasswordPage} />
+        <Route path="/reset" component={ResetPage} />
+        <Route path="/" exact component={AuthPage} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        user: user,
+        token: token,
+        login: login,
+        logout: logout,
+        update: update,
+      }}
+    >
+      <StockContext.Provider
+        value={{
+          stocks: stocks,
+          totalStocks: totalStocks,
+          filteredTotalStocks: filteredTotalStocks,
+          fetchAllStocks: fetchAllStocks,
+        }}
+      >
+        {token ? (
+          <MainNavigation {...props}>
+            <Suspense fallback={<LoadingSpinner asOverlay />}>
+              {routes}
+            </Suspense>
+          </MainNavigation>
+        ) : (
+          <Suspense fallback={<LoadingSpinner asOverlay />}>{routes}</Suspense>
+        )}
+      </StockContext.Provider>
+    </AuthContext.Provider>
   );
-}
+};
 
-export default App;
+export default withRouter(App);

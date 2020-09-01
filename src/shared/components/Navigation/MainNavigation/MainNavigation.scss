@@ -1,0 +1,11 @@
+@import '../../../../scss/mixin.scss';
+
+.main-navigation {
+  &__main {
+    margin-top: 20rem;
+
+    @include respond(phone) {
+      margin-top: 10rem;
+    }
+  }
+}

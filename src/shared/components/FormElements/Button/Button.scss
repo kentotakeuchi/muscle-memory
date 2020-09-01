@@ -1,0 +1,74 @@
+@import '../../../../scss/variables.scss';
+
+.button {
+  font-family: 'Gotham Light', Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid transparent;
+  padding: 1rem 1.5rem;
+  background: black;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+  transition: all 0.5s;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:hover,
+.button:active {
+  border: 1px solid black;
+  background: transparent;
+  color: black;
+}
+
+.button--inverse {
+  border: 1px solid black;
+  background: transparent;
+  color: black;
+}
+
+.button--inverse:hover,
+.button--inverse:active {
+  color: white;
+  background: black;
+}
+
+.button--danger {
+  background: $color-danger;
+  border-color: $color-danger;
+}
+
+.button--danger:hover,
+.button--danger:active {
+  background: $color-danger-light;
+  border-color: $color-danger-light;
+}
+
+.button:disabled,
+.button:hover:disabled,
+.button:active:disabled {
+  background: $color-grey-light-3;
+  color: $color-grey-dark;
+  border-color: $color-grey-light-3;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+// TODO: plan each size of button
+.button--small {
+  font-size: 0.5rem;
+}
+
+.button--medium {
+  padding: 1.5rem 2rem;
+}
+
+.button--big {
+  padding: 1rem 5rem;
+  box-sizing: border-box;
+}

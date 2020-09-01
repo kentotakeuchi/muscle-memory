@@ -1,0 +1,25 @@
+@import '../../../scss/variables.scss';
+
+.login-form {
+  &__title {
+    font-size: 33px;
+    margin-bottom: 3rem;
+    text-transform: capitalize;
+  }
+
+  &__form {
+    display: grid;
+    row-gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  & > a {
+    width: max-content;
+    font-family: 'Miller Banner', 'Times New Roman', serif;
+    text-decoration: underline;
+  }
+  & > a:hover {
+    text-decoration: none;
+    opacity: 1;
+  }
+}
