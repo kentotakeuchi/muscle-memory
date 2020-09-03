@@ -1,0 +1,9 @@
+@import '../../../../scss/mixin.scss';
+
+.logo {
+  font-family: 'FranklinGothicStd-ExtraCond', sans-serif;
+  text-transform: uppercase;
+
+  @include respond(phone) {
+  }
+}

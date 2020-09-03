@@ -25,27 +25,22 @@ const ResetPage = React.lazy(() => import('./auth/pages/ResetPage'));
 const AuthPage = React.lazy(() => import('./auth/pages/AuthPage'));
 
 // PAGES (AUTHORIZED)
-// const HomePage = React.lazy(() => import('./homePage/pages/HomePage'));
+const HomePage = React.lazy(() => import('./homePage/pages/HomePage'));
 
 const App = (props: RouteComponentProps): JSX.Element => {
   const { token, login, logout, user, update } = useAuth();
-  const {
-    stocks,
-    filteredTotalStocks,
-    totalStocks,
-    fetchAllStocks,
-  } = useStock();
+  const { stocks, totalStocks, fetchRandomMultipleStocks } = useStock();
 
   useEffect(() => {
-    token && fetchAllStocks(token);
-  }, [fetchAllStocks, token]);
+    token && fetchRandomMultipleStocks(token);
+  }, [fetchRandomMultipleStocks, token]);
 
   let routes;
 
   if (token) {
     routes = (
       <Switch>
-        <Route path="/" component={AuthPage} />
+        <Route path="/" component={HomePage} />
         <Redirect to="/" />
       </Switch>
     );
@@ -75,8 +70,7 @@ const App = (props: RouteComponentProps): JSX.Element => {
         value={{
           stocks: stocks,
           totalStocks: totalStocks,
-          filteredTotalStocks: filteredTotalStocks,
-          fetchAllStocks: fetchAllStocks,
+          fetchRandomMultipleStocks: fetchRandomMultipleStocks,
         }}
       >
         {token ? (

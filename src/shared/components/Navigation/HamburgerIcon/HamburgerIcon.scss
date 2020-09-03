@@ -1,0 +1,67 @@
+@import '../../../../scss/variables.scss';
+@import '../../../../scss/mixin.scss';
+
+.hamburger-icon {
+  &__btn {
+    position: fixed;
+    top: 4rem;
+    left: 4rem;
+    z-index: 100;
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+  }
+
+  &__icon {
+    position: relative;
+
+    &,
+    &::before,
+    &::after {
+      width: 4rem;
+      height: 2px;
+      background-color: $color-primary;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      transition: all 0.2s;
+    }
+
+    &::before {
+      top: -0.8rem;
+    }
+    &::after {
+      top: 0.8rem;
+    }
+  }
+
+  &__btn:hover &__icon::before {
+    top: -1rem;
+  }
+  &__btn:hover &__icon::after {
+    top: 1rem;
+  }
+
+  &__btn:focus {
+    outline: 0;
+  }
+  &__btn--open &__icon {
+    background-color: transparent;
+  }
+  &__btn--open &__icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  &__btn--open &__icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+}

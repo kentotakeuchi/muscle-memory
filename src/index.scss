@@ -3,17 +3,17 @@
 
 // FONTS
 @font-face {
-  font-family: 'FranklinGothicStd-ExtraCond';
-  src: local('FranklinGothicStd-ExtraCond'),
-    url('./asset/fonts/Franklin\ Gothic\ Std\ Extra\ Condensed.otf');
-  format: ('opentype');
-}
-
-@font-face {
   font-family: 'TradeGothicLT';
   // font-weight: 600;
   src: local('TradeGothicLT'), url('./asset/fonts/Trade_Gothic_LT.ttf');
   format: ('truetype');
+}
+
+@font-face {
+  font-family: 'FranklinGothicStd-ExtraCond';
+  src: local('FranklinGothicStd-ExtraCond'),
+    url('./asset/fonts/Franklin\ Gothic\ Std\ Extra\ Condensed.otf');
+  format: ('opentype');
 }
 
 @font-face {
@@ -111,5 +111,9 @@ button {
   font-family: inherit;
   font-size: inherit;
   text-transform: inherit;
+  color: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  background-color: inherit;
   cursor: pointer;
 }

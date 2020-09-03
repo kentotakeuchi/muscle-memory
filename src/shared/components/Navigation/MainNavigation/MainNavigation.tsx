@@ -3,46 +3,41 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import './MainNavigation.scss';
 import MainHeader from '../MainHeader/MainHeader';
-import MainFooter from '../MainFooter/MainFooter';
 import NavLinks from '../NavLinks/NavLinks';
 import SideDrawer from '../SideDrawer/SideDrawer';
 import Backdrop from '../../UIElements/Backdrop/Backdrop';
+import HamburgerIcon from '../HamburgerIcon/HamburgerIcon';
 import Copyright from '../Copyright/Copyright';
+import Logo from '../Logo/Logo';
 
 // TODO: type
 const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
   props: any
 ): JSX.Element => {
   console.log({ props });
-
-  const { location } = props;
+  console.log({ window });
 
   // Local state
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
-  const [backgroundColor, setBackgroundColor] = useState('transparent');
+  const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
+  const [iconIsShow, setIconIsShow] = useState<boolean>(true);
+  const [scrollYPosition, setScrollYPosition] = useState<number>(0);
 
-  // bg: transparent > scroll down > bg: slightly opaque white
-  const scrollEventHandler = useCallback(
-    (e) => {
-      if (location.pathname === '/') {
-        window.scrollY < 1
-          ? setBackgroundColor('transparent')
-          : setBackgroundColor('rgb(255, 255, 255, .95)');
-      }
-    },
-    [location]
-  );
+  const scrollEventHandler = useCallback(() => {
+    // Store current scrollY position
+    setScrollYPosition(window.pageYOffset);
+
+    // Show hamburger icon when scroll up
+    // Hide hamburger icon when scroll down
+    window.scrollY > scrollYPosition
+      ? setIconIsShow(false)
+      : setIconIsShow(true);
+  }, [scrollYPosition]);
 
   // Lifecycle
   useEffect(() => {
-    if (location.pathname === '/') {
-      setBackgroundColor('transparent');
-      window.addEventListener('scroll', scrollEventHandler);
-    } else {
-      setBackgroundColor('rgb(255, 255, 255, .95)');
-    }
+    window.addEventListener('scroll', scrollEventHandler);
     return () => window.removeEventListener('scroll', scrollEventHandler);
-  }, [location, scrollEventHandler]);
+  }, [scrollEventHandler]);
 
   // Side drawer handler (open & close)
   const openDrawerHandler = () => {
@@ -56,41 +51,20 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
     <React.Fragment>
       {drawerIsOpen && <Backdrop onClick={closeDrawerHandler} />}
       <SideDrawer show={drawerIsOpen} onClick={closeDrawerHandler}>
+        <Logo fontSize={5} />
         <nav className="side-drawer__nav">
           <NavLinks className="nav-links--side-drawer" />
         </nav>
+        <Copyright fontSize={1.2} />
       </SideDrawer>
-      <MainHeader
-        className="main-header"
-        // style={!mq.matches ? backgroundColor : 'transparent'}
-        style={backgroundColor}
-      >
-        <button className="main-header__menu-btn" onClick={openDrawerHandler}>
-          <span />
-          <span />
-          <span />
-        </button>
-        <nav className="main-header__nav">
-          <NavLinks className="nav-links--main-header" />
-        </nav>
+
+      <MainHeader className="main-header">
+        {iconIsShow && (
+          <HamburgerIcon onClick={openDrawerHandler} isOpen={drawerIsOpen} />
+        )}
       </MainHeader>
 
-      <main
-        className={
-          location.pathname !== '/' ? 'main-navigation__main' : undefined
-        }
-      >
-        {props.children}
-      </main>
-
-      <MainFooter className="main-footer">
-        <nav className="main-footer__nav">
-          <NavLinks className="nav-links--main-footer" />
-        </nav>
-        <div className="main-footer__content--bottom">
-          <Copyright className="copyright--main-footer" />
-        </div>
-      </MainFooter>
+      <main className="main-navigation__main">{props.children}</main>
     </React.Fragment>
   );
 };
