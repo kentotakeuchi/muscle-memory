@@ -2,11 +2,16 @@ import React from 'react';
 
 import './LoadingSpinner.scss';
 
-// TODO: type
-const LoadingSpinner = (props: any) => {
+interface props {
+  asOverlay?: boolean;
+}
+
+const LoadingSpinner = ({ asOverlay }: props): JSX.Element => {
   return (
-    <div className={`${props.asOverlay && 'loading-spinner__overlay'}`}>
-      <div className="lds-dual-ring"></div>
+    <div className={`spinner ${asOverlay && 'overlay'}`}>
+      <div className="bounce1"></div>
+      <div className="bounce2"></div>
+      <div className="bounce3"></div>
     </div>
   );
 };
