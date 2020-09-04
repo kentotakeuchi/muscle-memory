@@ -1,6 +1,7 @@
 .home-page {
   display: grid;
-  place-items: center;
+  grid-auto-flow: column;
+  gap: 5rem;
   height: 200vh;
   text-transform: uppercase;
 }
