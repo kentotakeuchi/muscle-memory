@@ -14,9 +14,6 @@ import Logo from '../Logo/Logo';
 const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
   props: any
 ): JSX.Element => {
-  console.log({ props });
-  console.log({ window });
-
   // Local state
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
   const [iconIsShow, setIconIsShow] = useState<boolean>(true);

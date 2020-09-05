@@ -1,9 +1,18 @@
 .home-page {
   display: grid;
-  grid-auto-flow: column;
-  gap: 5rem;
-  height: 200vh;
-  text-transform: uppercase;
+  row-gap: 20rem;
+
+  &__main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    gap: 5rem;
+    text-transform: uppercase;
+  }
+
+  &__proverb {
+    display: grid;
+    place-items: center;
+  }
 }
 
 .font2 {

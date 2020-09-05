@@ -25,7 +25,7 @@ const FlipCard = ({ front, back, color }: props): JSX.Element => {
         }
         onClick={flipHandler}
       >
-        <div className="flip-card__content">{front}</div>
+        <p className="flip-card__content">{front}</p>
       </div>
       <div
         className="flip-card__side flip-card__side--back"
@@ -36,7 +36,7 @@ const FlipCard = ({ front, back, color }: props): JSX.Element => {
         }
         onClick={flipHandler}
       >
-        <div className="flip-card__content">{back}</div>
+        <p className="flip-card__content">{back}</p>
       </div>
     </div>
   );
