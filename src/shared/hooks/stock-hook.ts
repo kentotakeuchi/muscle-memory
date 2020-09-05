@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 
 import { useHttpClient } from './http-hook';
 
+// TODO: type
 export const useStock = () => {
   const [stocks, setStocks] = useState([]);
   const [totalStocks, setTotalStocks] = useState(0);

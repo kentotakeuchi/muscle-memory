@@ -26,6 +26,7 @@ const AuthPage = React.lazy(() => import('./auth/pages/AuthPage'));
 
 // PAGES (AUTHORIZED)
 const HomePage = React.lazy(() => import('./homePage/pages/HomePage'));
+const StockPage = React.lazy(() => import('./stockPage/pages/StockPage'));
 
 const App = (props: RouteComponentProps): JSX.Element => {
   const { token, login, logout, user, update } = useAuth();
@@ -40,6 +41,7 @@ const App = (props: RouteComponentProps): JSX.Element => {
   if (token) {
     routes = (
       <Switch>
+        <Route path="/stock" component={StockPage} />
         <Route path="/" component={HomePage} />
         <Redirect to="/" />
       </Switch>

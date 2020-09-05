@@ -1,16 +1,8 @@
-.home-page {
-  display: grid;
-  row-gap: 20rem;
-
+.stock-page {
   &__main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
     gap: 5rem;
     text-transform: uppercase;
-  }
-
-  &__proverb {
-    display: grid;
-    place-items: center;
   }
 }
