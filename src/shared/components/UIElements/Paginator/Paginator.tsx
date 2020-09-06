@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './Paginator.scss';
 
-// TODO: type
-const Paginator = function ({
+interface props {
+  onPage: (direction: string | number) => void;
+  lastPage: number;
+  currentPage: number;
+  className?: string;
+}
+
+const Paginator: FunctionComponent<props> = function ({
   children,
   onPage,
   lastPage,
   currentPage,
   className,
-}: any): any {
+}) {
   // Logic for displaying page numbers
   const pageNumbers = [];
   for (let i = 1; i <= lastPage; i++) {
@@ -44,7 +50,7 @@ const Paginator = function ({
         {currentPage > 1 && (
           <button
             className="paginator__control"
-            onClick={onPage.bind('previous')} // TODO: removed "this"
+            onClick={() => onPage('previous')}
           >
             <span>«&nbsp;</span>
             prev
@@ -54,10 +60,7 @@ const Paginator = function ({
         {pageNumberElements}
 
         {currentPage < lastPage && (
-          <button
-            className="paginator__control"
-            onClick={onPage.bind('next')} // TODO: removed "this"
-          >
+          <button className="paginator__control" onClick={() => onPage('next')}>
             next
             <span>&nbsp;»</span>
           </button>
