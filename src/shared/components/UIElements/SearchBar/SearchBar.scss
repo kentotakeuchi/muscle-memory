@@ -1,0 +1,25 @@
+@import '../../../scss/variables.scss';
+
+.search-bar {
+  &__search-box {
+    & input {
+      width: 100%;
+      border: 1px solid #ccc;
+      background: transparent;
+    }
+
+    & input {
+      padding: 1rem 1rem;
+    }
+
+    & input:focus {
+      outline: none;
+      background: #ebebeb;
+      border-color: #000080;
+    }
+
+    & input::placeholder {
+      color: #ccc;
+    }
+  }
+}

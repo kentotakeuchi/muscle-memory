@@ -1,26 +1,27 @@
+@import '../../../../scss/variables.scss';
+
 .paginator {
-  &--product-library,
-  &--post-library,
-  &--products,
-  &--posts {
+  &--stock-page {
     display: grid;
-    row-gap: 5rem;
+    row-gap: 10rem;
   }
 
   &__control-box {
     display: grid;
     grid-auto-flow: column;
     justify-content: center;
-    column-gap: 2rem;
-    font-family: 'Miller Banner', 'Times New Roman', serif;
-    font-weight: 400;
-    text-transform: capitalize;
+    column-gap: 3rem;
+    font-family: 'FranklinGothicStd-ExtraCond';
+    // font-family: 'TradeGothicLTStd-BoldExt';
+    // font-family: 'Miller Banner';
+    font-size: 4rem;
+    text-transform: uppercase;
   }
 
   &__number {
   }
 
   &__number--active {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $color-primary;
   }
 }

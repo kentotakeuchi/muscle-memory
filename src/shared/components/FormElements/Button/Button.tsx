@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Button.scss';
@@ -8,7 +8,6 @@ interface customProps {
   size?: string;
   inverse?: boolean;
   danger?: boolean;
-  children?: string;
   to?: string;
   exact?: boolean;
   type?: 'button' | 'submit' | 'reset' | undefined;
@@ -18,7 +17,7 @@ interface customProps {
 
 type buttonProps = customProps;
 
-const Button = (props: buttonProps): JSX.Element => {
+const Button: FunctionComponent<buttonProps> = (props) => {
   if (props.href) {
     return (
       <a

@@ -23,7 +23,10 @@ interface stockProps {
 // TODO: type of direction..
 let loadStocks: (
   direction?: any,
-  event?: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  event?:
+    | React.MouseEvent<HTMLButtonElement, MouseEvent>
+    | React.ChangeEvent<HTMLInputElement>
+    | undefined
 ) => Promise<void>;
 
 const StockPage: FunctionComponent = () => {
@@ -36,6 +39,7 @@ const StockPage: FunctionComponent = () => {
   const [totalNoFilteredStocks, setTotalNoFilteredStocks] = useState<number>(0);
   const [stocksPage, setStocksPage] = useState<number>(1);
   const stocksPerPage: number = 2;
+  const [searchText, setSearchText] = useState<string | undefined>('');
 
   useEffect(() => {
     loadStocks();
@@ -50,6 +54,7 @@ const StockPage: FunctionComponent = () => {
       if (event) event.persist();
 
       let page: number = stocksPage;
+      let query: string | undefined = searchText;
 
       if (direction) {
         if (direction === 'next') {
@@ -58,6 +63,11 @@ const StockPage: FunctionComponent = () => {
         } else if (direction === 'previous') {
           page--;
           setStocksPage(page);
+        } else if (direction === 'search') {
+          query = event && (event.target as HTMLInputElement).value;
+          page = 1;
+          setStocksPage(page);
+          setSearchText(query);
         } else {
           page = direction;
           setStocksPage(page);
@@ -65,8 +75,13 @@ const StockPage: FunctionComponent = () => {
       }
 
       try {
-        // Fetch NO filtered stocks
+        // URL for NO filtered stocks
         let url = `${process.env.REACT_APP_BACKEND_URL}/stocks/?page=${page}&limit=2`;
+
+        // URL for filtered stocks by search text
+        if (query || searchText) {
+          url += query ? `&if=${query}` : '';
+        }
 
         const responseData = await sendRequest(url, 'GET', null, {
           Authorization: 'Bearer ' + token,
@@ -76,7 +91,7 @@ const StockPage: FunctionComponent = () => {
         setTotalNoFilteredStocks(responseData.total);
       } catch (err) {}
     },
-    [stocksPage, sendRequest, token]
+    [stocksPage, sendRequest, token, searchText]
   );
 
   const stockElements = stocks.map((s) => (
@@ -92,6 +107,7 @@ const StockPage: FunctionComponent = () => {
           onPage={loadStocks}
           lastPage={Math.ceil(totalNoFilteredStocks / stocksPerPage)}
           currentPage={stocksPage}
+          className="paginator--stock-page"
         >
           <div className="stock-page__main">{stockElements}</div>
         </Paginator>
