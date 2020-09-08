@@ -1,25 +1,71 @@
-@import '../../../scss/variables.scss';
+@import '../../../../scss/variables.scss';
 
 .search-bar {
+  width: 30rem;
+  display: grid;
+  justify-items: end;
+
   &__search-box {
-    & input {
-      width: 100%;
-      border: 1px solid #ccc;
-      background: transparent;
-    }
+    display: grid;
+    grid-auto-flow: column;
 
     & input {
-      padding: 1rem 1rem;
+      position: fixed;
+      top: 4.5rem;
+      right: 4rem;
+      z-index: 100;
+      width: 5rem;
+      height: 5rem;
+      background: transparent;
+      padding: 1rem 2rem;
+      border: 1px solid transparent;
+      border-radius: 10rem;
+      outline: none;
+      color: transparent;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+
+    input::-webkit-search-decoration,
+    input::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    & input:hover + svg {
+      transform: scale(1.1);
     }
 
     & input:focus {
-      outline: none;
-      background: #ebebeb;
-      border-color: #000080;
+      width: 40rem;
+      border: 1px solid $color-primary;
+      color: $color-primary;
+      cursor: auto;
     }
 
     & input::placeholder {
-      color: #ccc;
+      color: transparent;
+    }
+
+    & input:focus::placeholder {
+      color: $color-primary;
+    }
+
+    & svg {
+      position: fixed;
+      top: 5rem;
+      right: 4.5rem;
+      transition: all 0.3s;
+    }
+
+    // TODO: z-index issue..
+    // I did tricky solution now..
+    & svg:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+
+    & input:focus + svg {
+      transform: scale(0.8);
     }
   }
 }

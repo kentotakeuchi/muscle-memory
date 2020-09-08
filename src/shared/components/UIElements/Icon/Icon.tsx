@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './Icon.scss';
-import sprite from '../../../../asset/images/sprite.svg';
+import sprite from '../../../../asset/svgs/sprite.svg';
 
-// TODO: type
-const Icon = ({
-  width,
-  height,
-  id,
-}: {
+interface props {
   width: number;
   height: number;
   id: string;
-}) => {
+}
+
+const Icon: FunctionComponent<props> = ({ width, height, id }) => {
   return (
     <svg className="icon" width={width} height={height}>
       <use xlinkHref={sprite + `#${id}`}></use>

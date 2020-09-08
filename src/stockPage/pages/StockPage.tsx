@@ -9,6 +9,7 @@ import './StockPage.scss';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
+import SearchBar from '../../shared/components/UIElements/SearchBar/SearchBar';
 import Paginator from '../../shared/components/UIElements/Paginator/Paginator';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -76,7 +77,7 @@ const StockPage: FunctionComponent = () => {
 
       try {
         // URL for NO filtered stocks
-        let url = `${process.env.REACT_APP_BACKEND_URL}/stocks/?page=${page}&limit=2`;
+        let url = `${process.env.REACT_APP_BACKEND_URL}/stocks?page=${page}&limit=2`;
 
         // URL for filtered stocks by search text
         if (query || searchText) {
@@ -103,6 +104,7 @@ const StockPage: FunctionComponent = () => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       <div className="stock-page layout">
+        <SearchBar placeholder="Search.." onLoad={loadStocks} />
         <Paginator
           onPage={loadStocks}
           lastPage={Math.ceil(totalNoFilteredStocks / stocksPerPage)}
