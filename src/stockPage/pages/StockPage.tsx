@@ -13,6 +13,7 @@ import SearchBar from '../../shared/components/UIElements/SearchBar/SearchBar';
 import Paginator from '../../shared/components/UIElements/Paginator/Paginator';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
+import { ScrollDownHideUpShow } from '../../shared/util/scrollDownHideUpShow';
 
 interface stockProps {
   _id: string;
@@ -35,6 +36,8 @@ const StockPage: FunctionComponent = () => {
   const { token } = auth;
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const { isShow } = ScrollDownHideUpShow();
 
   const [stocks, setStocks] = useState<stockProps[]>([]);
   const [totalNoFilteredStocks, setTotalNoFilteredStocks] = useState<number>(0);
@@ -104,7 +107,7 @@ const StockPage: FunctionComponent = () => {
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       <div className="stock-page layout">
-        <SearchBar placeholder="Search.." onLoad={loadStocks} />
+        {isShow && <SearchBar placeholder="Search.." onLoad={loadStocks} />}
         <Paginator
           onPage={loadStocks}
           lastPage={Math.ceil(totalNoFilteredStocks / stocksPerPage)}

@@ -26,6 +26,7 @@ const AuthPage = React.lazy(() => import('./auth/pages/AuthPage'));
 
 // PAGES (AUTHORIZED)
 const HomePage = React.lazy(() => import('./homePage/pages/HomePage'));
+const PlayPage = React.lazy(() => import('./playPage/pages/PlayPage'));
 const StockPage = React.lazy(() => import('./stockPage/pages/StockPage'));
 
 const App = (props: RouteComponentProps): JSX.Element => {
@@ -42,6 +43,7 @@ const App = (props: RouteComponentProps): JSX.Element => {
     routes = (
       <Switch>
         <Route path="/stock" component={StockPage} />
+        <Route path="/play" component={PlayPage} />
         <Route path="/" component={HomePage} />
         <Redirect to="/" />
       </Switch>

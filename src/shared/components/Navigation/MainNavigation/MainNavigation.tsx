@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import './MainNavigation.scss';
@@ -9,6 +9,7 @@ import Backdrop from '../../UIElements/Backdrop/Backdrop';
 import HamburgerIcon from '../HamburgerIcon/HamburgerIcon';
 import Copyright from '../Copyright/Copyright';
 import Logo from '../Logo/Logo';
+import { ScrollDownHideUpShow } from '../../../util/scrollDownHideUpShow';
 
 // TODO: type
 const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
@@ -16,25 +17,8 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
 ): JSX.Element => {
   // Local state
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
-  const [iconIsShow, setIconIsShow] = useState<boolean>(true);
-  const [scrollYPosition, setScrollYPosition] = useState<number>(0);
 
-  const scrollEventHandler = useCallback(() => {
-    // Store current scrollY position
-    setScrollYPosition(window.pageYOffset);
-
-    // Show hamburger icon when scroll up
-    // Hide hamburger icon when scroll down
-    window.scrollY > scrollYPosition
-      ? setIconIsShow(false)
-      : setIconIsShow(true);
-  }, [scrollYPosition]);
-
-  // Lifecycle
-  useEffect(() => {
-    window.addEventListener('scroll', scrollEventHandler);
-    return () => window.removeEventListener('scroll', scrollEventHandler);
-  }, [scrollEventHandler]);
+  const { isShow } = ScrollDownHideUpShow();
 
   // Side drawer handler (open & close)
   const openDrawerHandler = () => {
@@ -56,7 +40,7 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
       </SideDrawer>
 
       <MainHeader className="main-header">
-        {iconIsShow && (
+        {isShow && (
           <HamburgerIcon onClick={openDrawerHandler} isOpen={drawerIsOpen} />
         )}
       </MainHeader>
