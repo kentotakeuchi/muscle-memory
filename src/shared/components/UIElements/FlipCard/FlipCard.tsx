@@ -5,9 +5,10 @@ interface props {
   front: string;
   back: string;
   color: string;
+  zIndex?: number;
 }
 
-const FlipCard = ({ front, back, color }: props): JSX.Element => {
+const FlipCard = ({ front, back, color, zIndex = 0 }: props): JSX.Element => {
   const [isFront, setIsFront] = useState<boolean>(true);
 
   const flipHandler = () => {
@@ -15,7 +16,7 @@ const FlipCard = ({ front, back, color }: props): JSX.Element => {
   };
 
   return (
-    <div className="flip-card">
+    <div className="flip-card" style={{ zIndex: zIndex }}>
       <div
         className="flip-card__side flip-card__side--front"
         style={

@@ -5,9 +5,12 @@ import React, {
   useState,
   FunctionComponent,
 } from 'react';
+import { Swipeable, direction } from 'react-deck-swiper';
+
 import './PlayPage.scss';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
+import Button from '../../shared/components/FormElements/Button/Button';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -29,8 +32,8 @@ const PlayPage: FunctionComponent = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [stocks, setStocks] = useState<stockProps[]>([]);
-  const [totalStocks, setTotalStocks] = useState<number>(0);
 
+  // TODO: error > maybe swipe stuff has to be cleaned when unumount
   useEffect(() => {
     loadRandomStocks();
   }, []);
@@ -47,20 +50,53 @@ const PlayPage: FunctionComponent = () => {
       );
 
       setStocks(responseData.data);
-      setTotalStocks(responseData.total);
     } catch (err) {}
   }, [sendRequest, token]);
 
-  const stockElements = stocks.map((s) => (
-    <FlipCard key={s._id} front={s.if} back={s.then} color={s.color} />
-  ));
+  const remove = () => setStocks((prevStocks) => prevStocks.slice(1));
+
+  const handleOnSwipe = (swipeDirection: direction) => {
+    if (swipeDirection === direction.RIGHT) {
+      console.log('handle right swipe');
+      return;
+    }
+
+    if (swipeDirection === direction.LEFT) {
+      console.log('handle left swipe');
+      return;
+    }
+  };
 
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
-      <div className="play-page layout">
-        <div className="play-page__main">{stockElements}</div>
+      <div className="play-page">
+        {stocks.length > 0 ? (
+          <div className="play-page__wrapper">
+            <Swipeable onSwipe={handleOnSwipe} onAfterSwipe={remove}>
+              <FlipCard
+                key={stocks[0]._id}
+                front={stocks[0].if}
+                back={stocks[0].then}
+                color={stocks[0].color}
+              />
+            </Swipeable>
+            {stocks.length > 1 && (
+              <FlipCard
+                key={stocks[1]._id}
+                front={stocks[1].if}
+                back={stocks[1].then}
+                color={stocks[1].color}
+                zIndex={-1}
+              />
+            )}
+          </div>
+        ) : (
+          <Button onClick={loadRandomStocks} size="big">
+            continue?
+          </Button>
+        )}
       </div>
     </React.Fragment>
   );
