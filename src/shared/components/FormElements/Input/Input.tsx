@@ -68,48 +68,23 @@ const Input = (props: any) => {
         />
       );
       break;
-    case 'textarea':
-      inputElement = (
-        <textarea
-          id={props.id}
-          placeholder={props.placeholder}
-          rows={props.rows || 3}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-          value={inputState.value}
-        />
-      );
-      break;
-    case 'select':
-      inputElement = (
-        <select
-          value={inputState.value}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-        >
-          <option value="">Please select one</option>
-          {props.options.map((option: any) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </select>
-      );
-      break;
     case 'radio':
       inputElement = (
-        <input
-          type={props.element}
-          value={props.value}
-          onChange={changeHandler}
-          onBlur={touchHandler}
-          id={props.id}
-          name={props.name}
-        />
+        <div className="radio-wrapper">
+          <input
+            type={props.element}
+            value={props.value}
+            onChange={changeHandler}
+            onBlur={touchHandler}
+            id={props.id}
+            name={props.name}
+          />
+          <span
+            className="checkmark"
+            style={{ backgroundColor: `${props.value}` }}
+          ></span>
+        </div>
       );
-      break;
-    case 'label':
-      inputElement = null;
       break;
     default:
       inputElement = (
@@ -130,10 +105,7 @@ const Input = (props: any) => {
         !inputState.isValid && inputState.isTouched && 'form-control--invalid'
       }`}
     >
-      <label htmlFor={props.id}>
-        {props.label}
-        {props.required && <span>&nbsp;*</span>}
-      </label>
+      <label htmlFor={props.id}>{props.label}</label>
       {inputElement}
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
