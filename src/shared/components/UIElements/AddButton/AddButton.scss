@@ -13,7 +13,11 @@
   border-radius: 50%;
   background-color: $color-primary;
   color: $color-black;
-  transition: all 0.5s;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: rotate(45deg);
+  }
 
   &:active {
     transform: rotate(90deg);

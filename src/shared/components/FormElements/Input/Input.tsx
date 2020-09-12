@@ -78,6 +78,7 @@ const Input = (props: any) => {
             onBlur={touchHandler}
             id={props.id}
             name={props.name}
+            checked={props.initialValue && props.initialValue === props.value}
           />
           <span
             className="checkmark"

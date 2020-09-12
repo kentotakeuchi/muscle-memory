@@ -31,6 +31,7 @@ const COLORS = [
 const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
   props: any
 ): JSX.Element => {
+  // GLOBAL
   const auth = useContext(AuthContext);
   const { token } = auth;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -52,13 +53,13 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
     false
   );
 
-  // Local state
+  // LOCAL STATE
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const { isShow } = ScrollDownHideUpShow();
 
-  // Side drawer handler (open & close)
+  // SIDE DRAWER HANDLER
   const openDrawerHandler = () => {
     setDrawerIsOpen(true);
   };
@@ -66,7 +67,7 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
     setDrawerIsOpen(false);
   };
 
-  // Modal handler
+  // MODAL HANDLER
   const openModalHandler = (): void => {
     setModalIsOpen(true);
   };
@@ -74,12 +75,15 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
     setModalIsOpen(false);
   };
 
+  //TODO: HOW TO RE-RENDER AFTER POST
+  // POST STOCK
   const stockSubmitHandler = async (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): Promise<void> => {
     e.preventDefault();
+    closeModalHandler();
 
     try {
       await sendRequest(
@@ -95,10 +99,12 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
           'Content-Type': 'application/json',
         }
       );
-      alert('success');
+
+      alert('saved 😉');
     } catch (err) {}
   };
 
+  // JSX
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />

@@ -6,7 +6,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
     gap: 5rem;
-    text-transform: uppercase;
   }
 
   &__proverb {
