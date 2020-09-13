@@ -8,9 +8,10 @@ import React, {
 import { Swipeable, direction } from 'react-deck-swiper';
 
 import './PlayPage.scss';
+import Button from '../../shared/components/FormElements/Button/Button';
+import Bubble from '../../shared/components/UIElements/Bubble/Bubble';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
-import Button from '../../shared/components/FormElements/Button/Button';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -49,7 +50,7 @@ const PlayPage: FunctionComponent = () => {
         }
       );
 
-      setStocks(responseData.data);
+      setStocks(responseData.data.slice(0, 2));
     } catch (err) {}
   }, [sendRequest, token]);
 
@@ -91,11 +92,31 @@ const PlayPage: FunctionComponent = () => {
                 zIndex={-1}
               />
             )}
+            {stocks.length > 2 && (
+              <FlipCard
+                key={stocks[2]._id}
+                front={stocks[2].if}
+                back={stocks[2].then}
+                color={stocks[2].color}
+                zIndex={-2}
+              />
+            )}
           </div>
         ) : (
-          <Button onClick={loadRandomStocks} size="big">
-            continue?
-          </Button>
+          <div className="play-page__continue-wrapper">
+            <div className="play-page__bubble-wrapper">
+              <Bubble width={30} height={15} />
+              <span role="img" aria-labelledby="emoji">
+                😏
+              </span>
+            </div>
+            <div className="play-page__btn-wrapper">
+              <Button to="/" inverse>
+                no
+              </Button>
+              <Button onClick={loadRandomStocks}>yes</Button>
+            </div>
+          </div>
         )}
       </div>
     </React.Fragment>

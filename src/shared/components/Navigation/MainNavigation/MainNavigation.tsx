@@ -32,6 +32,7 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
   props: any
 ): JSX.Element => {
   // GLOBAL
+  const { pathname } = props.location;
   const auth = useContext(AuthContext);
   const { token } = auth;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -109,6 +110,7 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
+
       <SideDrawer
         show={drawerIsOpen}
         onCancel={closeDrawerHandler}
@@ -176,7 +178,7 @@ const MainNavigation: React.FunctionComponent<RouteComponentProps> | any = (
         {isShow && (
           <React.Fragment>
             <HamburgerIcon onClick={openDrawerHandler} isOpen={drawerIsOpen} />
-            <AddButton onClick={openModalHandler} />
+            {pathname !== '/play' && <AddButton onClick={openModalHandler} />}
           </React.Fragment>
         )}
       </MainHeader>

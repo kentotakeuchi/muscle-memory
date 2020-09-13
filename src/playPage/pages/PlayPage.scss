@@ -5,13 +5,63 @@
 
   &__wrapper {
     position: relative;
-    width: 70%;
+    width: 35rem;
   }
 
-  // Style for next card
-  &__wrapper > *:nth-child(2) {
-    // transform: translateY(-100%);
+  // STYLE FOR NEXT CARDS
+  &__wrapper > *:nth-child(2),
+  *:nth-child(3) {
     position: absolute;
     top: 0;
+    width: 100%;
+  }
+
+  // NEXT CARD
+  &__wrapper > *:nth-child(2) {
+    transform: rotate(5deg);
+  }
+
+  // NEXT NEXT CARD
+  &__wrapper > *:nth-child(3) {
+    transform: rotate(10deg);
+  }
+
+  // HIDE TEXT OF NEXT CARDS
+  &__wrapper > *:nth-child(2) p,
+  *:nth-child(3) p {
+    opacity: 0.1;
+  }
+
+  // CONTINUE
+  &__continue-wrapper {
+    width: 35rem;
+    height: 35rem;
+    display: grid;
+    place-items: center;
+    row-gap: 3rem;
+  }
+
+  // BUBBLE + EMOJI WRAPPER
+  &__bubble-wrapper {
+    display: grid;
+    place-items: center;
+    row-gap: 2rem;
+    font-family: 'FranklinGothicStd-ExtraCond';
+    font-size: 3rem;
+  }
+
+  &__bubble-wrapper > .bubble {
+    padding-top: 1.5rem;
+  }
+
+  // EMOJI
+  &__bubble-wrapper > span {
+    font-size: 3rem;
+  }
+
+  &__btn-wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 3rem;
   }
 }
