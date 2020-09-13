@@ -50,7 +50,7 @@ const PlayPage: FunctionComponent = () => {
         }
       );
 
-      setStocks(responseData.data.slice(0, 2));
+      setStocks(responseData.data);
     } catch (err) {}
   }, [sendRequest, token]);
 

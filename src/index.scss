@@ -123,4 +123,8 @@ button {
 
 .layout {
   margin: 20rem 4rem;
+
+  @include respond(phone) {
+    margin: 20rem 2rem;
+  }
 }

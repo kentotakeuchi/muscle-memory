@@ -1,4 +1,5 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixin.scss';
 
 .stock-page {
   &__main {
@@ -18,6 +19,10 @@
     display: grid;
     grid-auto-flow: column;
     column-gap: 0.5rem;
+
+    @include respond(phone) {
+      right: -1.5rem;
+    }
   }
 
   &__action-wrapper button {

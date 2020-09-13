@@ -1,4 +1,5 @@
 @import '../../../../scss/variables.scss';
+@import '../../../../scss/mixin.scss';
 
 .paginator {
   &--stock-page {
@@ -12,10 +13,12 @@
     justify-content: center;
     column-gap: 3rem;
     font-family: 'FranklinGothicStd-ExtraCond';
-    // font-family: 'TradeGothicLTStd-BoldExt';
-    // font-family: 'Miller Banner';
     font-size: 4rem;
     text-transform: uppercase;
+
+    @include respond(phone) {
+      font-size: 3rem;
+    }
   }
 
   &__number {

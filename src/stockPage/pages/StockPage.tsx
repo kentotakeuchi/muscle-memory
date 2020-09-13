@@ -173,7 +173,7 @@ const StockPage: FunctionComponent = () => {
 
   // DELETE STOCK
   const deleteStockHandler = async (id: string): Promise<void> => {
-    if (window.confirm("are you sure? it can't be undone thereafter 😒")) {
+    if (window.confirm("Are you sure? It can't be undone thereafter 😒")) {
       try {
         await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/stocks/${id}`,
