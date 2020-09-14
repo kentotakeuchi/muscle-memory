@@ -119,6 +119,10 @@ button {
   letter-spacing: inherit;
   background-color: inherit;
   cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .layout {

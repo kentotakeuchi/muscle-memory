@@ -14,6 +14,7 @@ import Modal from '../../shared/components/UIElements/Modal/Modal';
 import SearchBar from '../../shared/components/UIElements/SearchBar/SearchBar';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
 import Paginator from '../../shared/components/UIElements/Paginator/Paginator';
+import Bubble from '../../shared/components/UIElements/Bubble/Bubble';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -135,7 +136,8 @@ const StockPage: FunctionComponent = () => {
           Authorization: 'Bearer ' + token,
         });
 
-        setStocks(responseData.data.data);
+        const stockArray = responseData.data.data;
+        setStocks(stockArray);
         setTotalNoFilteredStocks(responseData.total);
       } catch (err) {}
     },
@@ -185,6 +187,8 @@ const StockPage: FunctionComponent = () => {
         );
 
         setStocksPage(1);
+
+        // SIZE -1 FOR RE-RENDERING AFTER DELETING
         setTotalNoFilteredStocks((prevState) => prevState - 1);
       } catch (err) {}
     }
@@ -290,16 +294,29 @@ const StockPage: FunctionComponent = () => {
         </div>
       </Modal>
 
-      <div className="stock-page layout">
+      <div className={`stock-page ${totalNoFilteredStocks > 0 && 'layout'}`}>
         {isShow && <SearchBar placeholder="Search.." onLoad={loadStocks} />}
-        <Paginator
-          onPage={loadStocks}
-          lastPage={Math.ceil(totalNoFilteredStocks / stocksPerPage)}
-          currentPage={stocksPage}
-          className="paginator--stock-page"
-        >
-          <div className="stock-page__main">{stockElements}</div>
-        </Paginator>
+        {totalNoFilteredStocks > 0 ? (
+          <Paginator
+            onPage={loadStocks}
+            lastPage={Math.ceil(totalNoFilteredStocks / stocksPerPage)}
+            currentPage={stocksPage}
+            className="paginator--stock-page"
+          >
+            <div className="stock-page__main">{stockElements}</div>
+          </Paginator>
+        ) : (
+          <div className="stock-page__bubble-wrapper">
+            <Bubble
+              width={30}
+              height={15}
+              text="Add an item you want to memorize"
+            />
+            <span role="img" aria-labelledby="emoji">
+              😉
+            </span>
+          </div>
+        )}
       </div>
     </React.Fragment>
   );

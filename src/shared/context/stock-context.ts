@@ -4,7 +4,7 @@ import { createContext } from 'react';
 interface stockType {
   stocks: any[];
   totalStocks: number;
-  fetchRandomMultipleStocks: (token: string) => void;
+  fetchRandomMultipleStocks: (token: string | null) => void;
 }
 
 export const StockContext = createContext<stockType>({

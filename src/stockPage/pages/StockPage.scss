@@ -41,4 +41,24 @@
   &__action-wrapper button:hover {
     transform: rotate(45deg);
   }
+
+  // BUBBLE + EMOJI WRAPPER
+  &__bubble-wrapper {
+    display: grid;
+    place-content: center;
+    row-gap: 2rem;
+    height: 100vh;
+    font-family: 'FranklinGothicStd-ExtraCond';
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  &__bubble-wrapper > .bubble {
+    padding-top: 1.5rem;
+  }
+
+  // EMOJI
+  &__bubble-wrapper > span {
+    font-size: 3rem;
+  }
 }

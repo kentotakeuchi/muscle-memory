@@ -5,15 +5,16 @@ import './Bubble.scss';
 interface props {
   width: number;
   height: number;
+  text: string;
 }
 
-const Bubble: FunctionComponent<props> = ({ width, height }) => {
+const Bubble: FunctionComponent<props> = ({ width, height, text }) => {
   return (
     <div
       className="bubble"
       style={{ width: `${width}rem`, height: `${height}rem` }}
     >
-      one more?
+      {text}
     </div>
   );
 };

@@ -3,39 +3,61 @@
 .reset-form {
   display: grid;
   row-gap: 3rem;
+  justify-items: center;
 
   &__head {
-    display: grid;
-    row-gap: 2rem;
-    justify-items: center;
   }
 
   &__title {
-    font-size: 33px;
-    text-transform: capitalize;
+    font-family: 'FranklinGothicStd-ExtraCond';
+    font-size: 5rem;
+    text-align: center;
+    text-transform: uppercase;
   }
 
   &__instruction {
-    font-family: 'Gotham Light', Arial, Helvetica, sans-serif;
+    text-align: center;
   }
 
   &__form {
     display: grid;
-    row-gap: 3rem;
+    row-gap: 2rem;
+    width: 100%;
+    margin-bottom: 2rem;
   }
 
-  & > a {
-    justify-self: center;
-    width: max-content;
-    font-family: 'Miller Banner', 'Times New Roman', serif;
-    text-decoration: underline;
+  & label {
+    display: none;
   }
+
+  & input {
+    border: none;
+    border-bottom: 1px solid rgb(90, 90, 90);
+    border-radius: 0;
+  }
+
+  & button {
+    padding: 0;
+    padding-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  // CANCEL PASSWORD RESET
+  & > a {
+    width: max-content;
+    margin-bottom: 1rem;
+    font-family: 'Miller Banner', 'Times New Roman', serif;
+    font-size: 1.8rem;
+    text-decoration: underline;
+    text-transform: capitalize;
+  }
+
   & > a:hover {
     text-decoration: none;
     opacity: 1;
   }
 
   &__sent {
-    font-family: 'Gotham Light', Arial, Helvetica, sans-serif;
+    text-align: center;
   }
 }

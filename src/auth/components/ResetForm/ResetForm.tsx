@@ -58,7 +58,9 @@ const ResetForm = () => {
           <h1 className="reset-form__title">Forget your password?</h1>
           {!isSent && (
             <p className="reset-form__instruction">
-              Enter your email and we will send you a new password.
+              Enter your email.
+              <br />
+              We will send you a new password.
             </p>
           )}
         </header>
@@ -69,6 +71,7 @@ const ResetForm = () => {
               id="emailReset"
               type="email"
               label="email"
+              placeholder="Email"
               validators={[VALIDATOR_EMAIL()]}
               errorText="Please enter a valid email address."
               onInput={inputChangeHandler}
@@ -79,7 +82,7 @@ const ResetForm = () => {
             </Button>
           </form>
         )}
-        {!isSent && <Link to="/auth">Cancel password reset</Link>}
+        {!isSent && <Link to="/">Cancel password reset</Link>}
         {isSent && (
           <p className="reset-form__sent">
             We've sent you an email with a link to update your password.

@@ -49,21 +49,19 @@ const SignupForm = () => {
   ) => {
     event.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('email', formState.inputs.emailSignup.value);
-      formData.append('firstName', formState.inputs.firstName.value);
-      formData.append('lastName', formState.inputs.lastName.value);
-      formData.append('password', formState.inputs.passwordSignup.value);
-      formData.append(
-        'passwordConfirm',
-        formState.inputs.passwordConfirm.value
-      );
-      formData.append('photo', formState.inputs.photo.value[0]);
-
       const responseData = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
         'POST',
-        formData
+        JSON.stringify({
+          email: formState.inputs.emailSignup.value,
+          firstName: formState.inputs.firstName.value,
+          lastName: formState.inputs.lastName.value,
+          password: formState.inputs.passwordSignup.value,
+          passwordConfirm: formState.inputs.passwordConfirm.value,
+        }),
+        {
+          'Content-Type': 'application/json',
+        }
       );
 
       auth.login(responseData.data.user, responseData.token);
@@ -75,13 +73,14 @@ const SignupForm = () => {
       <ErrorModal error={error} onClear={clearError} />
       <section className="signup-form">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h1 className="signup-form__title">sign up</h1>
+        {/* <h1 className="signup-form__title">sign up</h1> */}
         <form onSubmit={signupSubmitHandler} className="signup-form__form">
           <Input
             element="input"
             id="emailSignup"
             type="email"
             label="email"
+            placeholder="Email"
             validators={[VALIDATOR_EMAIL()]}
             errorText="Please enter a valid email address."
             onInput={inputChangeHandler}
@@ -92,6 +91,7 @@ const SignupForm = () => {
             id="firstName"
             type="text"
             label="first name"
+            placeholder="First Name"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter your first name."
             onInput={inputChangeHandler}
@@ -102,6 +102,7 @@ const SignupForm = () => {
             id="lastName"
             type="text"
             label="last name"
+            placeholder="Last Name"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter your last name."
             onInput={inputChangeHandler}
@@ -113,6 +114,7 @@ const SignupForm = () => {
             id="passwordSignup"
             type="password"
             label="passowrd"
+            placeholder="Password"
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Please enter a valid password, at least 6 characters."
             onInput={inputChangeHandler}
@@ -123,12 +125,13 @@ const SignupForm = () => {
             id="passwordConfirm"
             type="password"
             label="confirm your password"
+            placeholder="Confirm Password"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter the same password."
             onInput={inputChangeHandler}
             required
           />
-          <Button type="submit" disabled={!formState.isValid} size="medium">
+          <Button type="submit" disabled={!formState.isValid}>
             sign up
           </Button>
         </form>

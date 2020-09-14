@@ -2,14 +2,39 @@
   display: grid;
   row-gap: 20rem;
 
+  &__layout {
+    margin: 0 4rem 20rem 4rem;
+  }
+
   &__main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
     gap: 5rem;
   }
 
+  // BUBBLE + EMOJI WRAPPER
+  &__bubble-wrapper {
+    display: grid;
+    place-content: center;
+    row-gap: 2rem;
+    height: 100vh;
+    font-family: 'FranklinGothicStd-ExtraCond';
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  &__bubble-wrapper > .bubble {
+    padding-top: 1.5rem;
+  }
+
+  // EMOJI
+  &__bubble-wrapper > span {
+    font-size: 3rem;
+  }
+
   &__proverb {
     display: grid;
-    place-items: center;
+    row-gap: 1rem;
+    text-align: center;
   }
 }

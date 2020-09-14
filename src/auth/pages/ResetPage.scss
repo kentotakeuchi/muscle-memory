@@ -1,13 +1,24 @@
+@import '../../scss/mixin.scss';
+@import '../../scss/variables.scss';
+
 .reset-page {
   display: grid;
-  row-gap: 2rem;
-  width: 30%;
+  place-content: center;
+  height: 100vh;
+  width: 50%;
   margin: auto;
-  margin-bottom: 20rem;
 
-  &__required {
-    justify-self: end;
-    font-size: 12px;
-    text-transform: capitalize;
+  @include respond(phone) {
+    width: 100%;
+  }
+
+  &__wrapper {
+    display: grid;
+    border: 1px solid;
+    padding: 7rem 5rem;
+
+    @include respond(phone) {
+      border: 0;
+    }
   }
 }

@@ -74,6 +74,7 @@ const NewPasswordForm = () => {
             id="password"
             type="password"
             label="password"
+            placeholder="Password"
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Please enter a valid password, at least 6 characters."
             onInput={inputChangeHandler}
@@ -84,6 +85,7 @@ const NewPasswordForm = () => {
             id="passwordConfirm"
             type="password"
             label="confirm password"
+            placeholder="New Password"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter the same password."
             onInput={inputChangeHandler}
