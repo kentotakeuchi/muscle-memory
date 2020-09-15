@@ -1,54 +1,78 @@
-import React, { useContext, useEffect, useCallback, useState } from 'react';
+import React, { useEffect } from 'react';
+
 import './HomePage.scss';
+import AddModal from '../../shared/components/UIElements/AddModal/AddModal';
+import AddButton from '../../shared/components/UIElements/AddButton/AddButton';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
 import Bubble from '../../shared/components/UIElements/Bubble/Bubble';
-import { useHttpClient } from '../../shared/hooks/http-hook';
-import { StockContext } from '../../shared/context/stock-context';
+import { useAPI } from '../../shared/hooks/api-hook';
+import { useModal } from '../../shared/hooks/modal-hook';
+import { ScrollDownHideUpShow } from '../../shared/util/scrollDownHideUpShow';
 
-interface quoteProps {
-  text: string;
-  author: string;
-}
-
+// COMPONENT
 const HomePage = (): JSX.Element => {
-  const { stocks, totalStocks } = useContext(StockContext);
+  const {
+    isLoading,
+    error,
+    clearError,
+    randomStocks,
+    totalRandomStocks,
+    fetchRandomMultipleStocks,
+    inputChangeHandler,
+    postStock,
+    quote,
+    fetchQuotesAPI,
+  } = useAPI();
+  const { modalIsOpen, openModalHandler, closeModalHandler } = useModal();
 
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  // UTILITY
+  const { isShow } = ScrollDownHideUpShow();
 
-  const [quote, setQuote] = useState<quoteProps | undefined>(undefined);
-
-  const stockElements = stocks.map((s) => (
-    <FlipCard key={s._id} front={s.if} back={s.then} color={s.color} />
-  ));
-
-  const fetchQuotesAPI = useCallback(async (): Promise<void> => {
-    try {
-      const responseData = await sendRequest(
-        `${process.env.REACT_APP_QUOTES_URL}`
-      );
-
-      const randomIdx = Math.floor(Math.random() * responseData.length);
-
-      setQuote(responseData[randomIdx]);
-    } catch (error) {}
-  }, [sendRequest]);
+  const stockSubmitHandler = async (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): Promise<void> => {
+    closeModalHandler();
+    postStock(e);
+  };
 
   useEffect(() => {
     fetchQuotesAPI();
   }, [fetchQuotesAPI]);
 
+  useEffect(() => {
+    fetchRandomMultipleStocks();
+  }, [totalRandomStocks, fetchRandomMultipleStocks]);
+
+  const stockElements = randomStocks.map((s) => (
+    <FlipCard key={s._id} front={s.if} back={s.then} color={s.color} />
+  ));
+
+  // RETURN JSX
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
+
       {isLoading && <LoadingSpinner asOverlay />}
+
+      <AddModal
+        show={modalIsOpen}
+        onCancel={closeModalHandler}
+        onSubmit={stockSubmitHandler}
+        onInput={inputChangeHandler}
+      />
+
+      {isShow && <AddButton onClick={openModalHandler} />}
+
       <div
         className={`home-page ${
-          totalStocks > 0 ? 'layout' : 'home-page__layout'
+          totalRandomStocks > 0 ? 'layout' : 'home-page__layout'
         }`}
       >
-        {stocks.length > 0 ? (
+        {totalRandomStocks > 0 ? (
           <div className="home-page__main">{stockElements}</div>
         ) : (
           <div className="home-page__bubble-wrapper">

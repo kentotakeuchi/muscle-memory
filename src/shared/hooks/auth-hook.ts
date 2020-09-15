@@ -25,8 +25,10 @@ export const useAuth = () => {
       setToken(token);
       setUser(currentUser);
       const tokenExpirationDate =
-        expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60 * 24); // 24h
+        expirationDate ||
+        new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 24); // 24d // TODO: IDK WHY "X > 24D" DOES NOT WORK?
       setTokenExpirationDate(tokenExpirationDate);
+
       localStorage.setItem(
         'userData',
         JSON.stringify({

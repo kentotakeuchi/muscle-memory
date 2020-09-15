@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import {
   Route,
   Switch,
@@ -13,13 +13,11 @@ import MainNavigation from './shared/components/Navigation/MainNavigation/MainNa
 
 // CUSTOM CONTEXT & HOOK
 import { AuthContext } from './shared/context/auth-context';
-import { StockContext } from './shared/context/stock-context';
 import { useAuth } from './shared/hooks/auth-hook';
-import { useStock } from './shared/hooks/stock-hook';
 
 // PAGES (UNAUTHORIZED)
-const NewPasswordPage = React.lazy(() =>
-  import('./auth/pages/NewPasswordPage')
+const NewPasswordPage = React.lazy(
+  () => import('./auth/pages/NewPasswordPage')
 );
 const ResetPage = React.lazy(() => import('./auth/pages/ResetPage'));
 const AuthPage = React.lazy(() => import('./auth/pages/AuthPage'));
@@ -31,11 +29,6 @@ const StockPage = React.lazy(() => import('./stockPage/pages/StockPage'));
 
 const App = (props: RouteComponentProps): JSX.Element => {
   const { token, login, logout, user, update } = useAuth();
-  const { stocks, totalStocks, fetchRandomMultipleStocks } = useStock();
-
-  useEffect(() => {
-    token && fetchRandomMultipleStocks(token);
-  }, [fetchRandomMultipleStocks, token]);
 
   let routes;
 
@@ -70,23 +63,13 @@ const App = (props: RouteComponentProps): JSX.Element => {
         update: update,
       }}
     >
-      <StockContext.Provider
-        value={{
-          stocks: stocks,
-          totalStocks: totalStocks,
-          fetchRandomMultipleStocks: fetchRandomMultipleStocks,
-        }}
-      >
-        {token ? (
-          <MainNavigation {...props}>
-            <Suspense fallback={<LoadingSpinner asOverlay />}>
-              {routes}
-            </Suspense>
-          </MainNavigation>
-        ) : (
+      {token ? (
+        <MainNavigation {...props}>
           <Suspense fallback={<LoadingSpinner asOverlay />}>{routes}</Suspense>
-        )}
-      </StockContext.Provider>
+        </MainNavigation>
+      ) : (
+        <Suspense fallback={<LoadingSpinner asOverlay />}>{routes}</Suspense>
+      )}
     </AuthContext.Provider>
   );
 };
