@@ -1,13 +1,8 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
+  "short_name": "Muscle",
+  "name": "Muscle Memory",
+  "description": "Muscle memory is a form of procedural memory that involves consolidating a specific motor task into memory through repetition, which has been used synonymously with motor learning. When a movement is repeated over time, a long-term muscle memory is created for that task, eventually allowing it to be performed with little to no conscious effort. This process decreases the need for attention and creates maximum efficiency within the motor and memory systems. Muscle memory is found in many everyday activities that become automatic and improve with practice, such as riding bicycles, driving motor vehicles, playing ball sports, typing on keyboards, entering PINs, playing musical instruments poker, martial arts, and dancing.",
+  "icons": [{}],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
