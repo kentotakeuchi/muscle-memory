@@ -10,16 +10,10 @@ import SearchBar from '../../shared/components/UIElements/SearchBar/SearchBar';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
 import Paginator from '../../shared/components/UIElements/Paginator/Paginator';
 import Bubble from '../../shared/components/UIElements/Bubble/Bubble';
-import { useAPI } from '../../shared/hooks/api-hook';
+import { useStock } from '../../shared/hooks/stock-hook';
 import { useModal } from '../../shared/hooks/modal-hook';
 import { ScrollDownHideUpShow } from '../../shared/util/scrollDownHideUpShow';
-
-interface stockProps {
-  _id: string;
-  if: string;
-  then: string;
-  color: string;
-}
+import { StockProps } from '../../shared/types/types';
 
 // TODO: FIGURE OUT WHY RADIO BUTTONS DOESN'T WORK AFTER A FEW CLICK
 // TODO: ISSUE OF THE SAME ID OF RADIO
@@ -42,7 +36,7 @@ const StockPage = (): JSX.Element => {
     setFormData,
     updateStock,
     deleteStock,
-  } = useAPI();
+  } = useStock();
   const { modalIsOpen, openModalHandler, closeModalHandler } = useModal();
 
   // LOCAL STATE
@@ -90,7 +84,7 @@ const StockPage = (): JSX.Element => {
   };
 
   // OPEN EDIT MODAL
-  const startEditHandler = (stock: stockProps): void => {
+  const startEditHandler = (stock: StockProps): void => {
     setSelectedStockId(stock._id);
     openEditHandler();
     setFormData(

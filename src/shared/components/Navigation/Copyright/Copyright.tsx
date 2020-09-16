@@ -7,7 +7,6 @@ interface props {
   fontSize?: number;
 }
 
-// TODO: type
 const Copyright = ({ className, fontSize }: props): JSX.Element => {
   return (
     <small

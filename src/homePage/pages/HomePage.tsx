@@ -7,7 +7,8 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal/ErrorModal
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
 import FlipCard from '../../shared/components/UIElements/FlipCard/FlipCard';
 import Bubble from '../../shared/components/UIElements/Bubble/Bubble';
-import { useAPI } from '../../shared/hooks/api-hook';
+import { useStock } from '../../shared/hooks/stock-hook';
+import { useQuote } from '../../shared/hooks/quote-hook';
 import { useModal } from '../../shared/hooks/modal-hook';
 import { ScrollDownHideUpShow } from '../../shared/util/scrollDownHideUpShow';
 
@@ -22,9 +23,8 @@ const HomePage = (): JSX.Element => {
     fetchRandomMultipleStocks,
     inputChangeHandler,
     postStock,
-    quote,
-    fetchQuotesAPI,
-  } = useAPI();
+  } = useStock();
+  const { quote, fetchQuotesAPI } = useQuote();
   const { modalIsOpen, openModalHandler, closeModalHandler } = useModal();
 
   // UTILITY

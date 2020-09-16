@@ -1,27 +1,20 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { UserProps } from '../types/types';
 
-// TODO: idk what does that mean..
 let logoutTimer: ReturnType<typeof setTimeout>;
-
-interface IUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-}
 
 export const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null>(
     null
   );
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<UserProps | null>(null);
 
   const history = useHistory();
 
   const login = useCallback(
-    (currentUser: IUser, token: string, expirationDate?: Date): void => {
+    (currentUser: UserProps, token: string, expirationDate?: Date): void => {
       setToken(token);
       setUser(currentUser);
       const tokenExpirationDate =
@@ -49,7 +42,7 @@ export const useAuth = () => {
     history.push('/');
   }, [history]);
 
-  const update = useCallback((updatedUser: IUser): void => {
+  const update = useCallback((updatedUser: UserProps): void => {
     setUser(updatedUser);
     const storedData = JSON.parse(localStorage.getItem('userData') || '{}');
 

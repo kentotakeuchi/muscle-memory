@@ -1,19 +1,13 @@
 import { createContext } from 'react';
-
-interface IUser {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-}
+import { UserProps } from '../types/types';
 
 interface AppContextInterface {
   isLoggedIn: boolean;
-  user: IUser | null;
+  user: UserProps | null;
   token: string | null;
-  login: (currentUser: IUser, token: string, expirationDate?: Date) => void;
+  login: (currentUser: UserProps, token: string, expirationDate?: Date) => void;
   logout: () => void;
-  update: (updatedUser: IUser) => void;
+  update: (updatedUser: UserProps) => void;
 }
 
 export const AuthContext = createContext<AppContextInterface>({

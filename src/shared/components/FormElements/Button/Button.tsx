@@ -2,22 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
 import './Button.scss';
+import { ButtonProps } from '../../../types/types';
 
-interface customProps {
-  href?: string;
-  size?: string;
-  inverse?: boolean;
-  danger?: boolean;
-  to?: string;
-  exact?: boolean;
-  type?: 'button' | 'submit' | 'reset' | undefined;
-  onClick?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
-  disabled?: boolean;
-}
-
-type buttonProps = customProps;
-
-const Button: FunctionComponent<buttonProps> = (props) => {
+const Button: FunctionComponent<ButtonProps> = (props) => {
   if (props.href) {
     return (
       <a

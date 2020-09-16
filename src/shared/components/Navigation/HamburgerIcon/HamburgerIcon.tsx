@@ -7,7 +7,6 @@ interface props {
   isOpen: boolean;
 }
 
-// TODO: type
 // TODO: consider more reusable component..
 const HamburgerIcon = ({ onClick, isOpen }: props): JSX.Element => {
   return (

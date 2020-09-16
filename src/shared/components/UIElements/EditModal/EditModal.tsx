@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 import Input from '../../FormElements/Input/Input';
 import Button from '../../FormElements/Button/Button';
 import { VALIDATOR_REQUIRE } from '../../../util/validators';
+import { ModalProps } from '../../../types/types';
 
 const COLORS = [
   { value: 'magenta' },
@@ -13,19 +14,7 @@ const COLORS = [
   { value: 'cyan' },
 ];
 
-interface props {
-  show: boolean;
-  onCancel: () => void;
-  onSubmit: (
-    e:
-      | React.FormEvent<HTMLFormElement>
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => any;
-  onInput: () => void;
-  formState: any;
-}
-
-const EditModal: FunctionComponent<props> = ({
+const EditModal: FunctionComponent<ModalProps> = ({
   show,
   onCancel,
   onSubmit,
