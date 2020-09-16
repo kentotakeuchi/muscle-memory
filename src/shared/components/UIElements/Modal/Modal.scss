@@ -14,7 +14,7 @@
   text-align: center;
 
   @include respond(phone) {
-    top: 25vh;
+    // top: 25vh;
     left: 0;
     bottom: 0;
     width: 100%;

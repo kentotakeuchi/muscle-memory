@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 
-import './EditModal.scss';
 import Modal from '../Modal/Modal';
 import Input from '../../FormElements/Input/Input';
 import Button from '../../FormElements/Button/Button';

@@ -21,8 +21,6 @@
     overflow-wrap: anywhere;
     hyphens: auto;
     overflow: scroll;
-    display: grid;
-    place-items: center;
     transition: all 0.5s ease;
 
     &--front {
@@ -35,7 +33,9 @@
 
   &__content {
     display: grid;
-    place-content: center;
+    // place-content: center;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     padding: 2rem;
   }
