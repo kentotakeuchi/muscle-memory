@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './LoginForm.scss';
@@ -10,21 +10,19 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
 } from '../../../shared/util/validators';
+import { useAuthRequest } from '../../../shared/hooks/auth-hook';
 import { useForm } from '../../../shared/hooks/form-hook';
-import { useHttpClient } from '../../../shared/hooks/http-hook';
-import { AuthContext } from '../../../shared/context/auth-context';
 
 ////////////////////////////////////////
 const LoginForm = (): JSX.Element => {
-  const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, clearError, onSubmit } = useAuthRequest();
   const [formState, inputChangeHandler] = useForm(
     {
-      emailLogin: {
+      email: {
         value: '',
         isValid: false,
       },
-      passwordLogin: {
+      password: {
         value: '',
         isValid: false,
       },
@@ -32,36 +30,18 @@ const LoginForm = (): JSX.Element => {
     false
   );
 
-  const loginSubmitHandler = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    try {
-      const responseData = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/login`,
-        'POST',
-        JSON.stringify({
-          email: formState.inputs.emailLogin.value,
-          password: formState.inputs.passwordLogin.value,
-        }),
-        {
-          'Content-Type': 'application/json',
-        }
-      );
-
-      auth.login(responseData.data.user, responseData.token);
-    } catch (err) {}
-  };
-
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <section className="login-form">
         {isLoading && <LoadingSpinner asOverlay />}
-        <form onSubmit={loginSubmitHandler} className="login-form__form">
+        <form
+          onSubmit={(e) => onSubmit(formState, 'login', e)}
+          className="login-form__form"
+        >
           <Input
             element="input"
-            id="emailLogin"
+            id="email"
             type="email"
             label="email"
             placeholder="Email"
@@ -72,7 +52,7 @@ const LoginForm = (): JSX.Element => {
           />
           <Input
             element="input"
-            id="passwordLogin"
+            id="password"
             type="password"
             label="password"
             placeholder="Password"

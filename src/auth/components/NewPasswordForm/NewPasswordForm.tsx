@@ -10,17 +10,16 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from '../../../shared/util/validators';
+import { useAuthRequest } from '../../../shared/hooks/auth-hook';
 import { useForm } from '../../../shared/hooks/form-hook';
-import { useHttpClient } from '../../../shared/hooks/http-hook';
 
 ////////////////////////////////////////
 const NewPasswordForm = () => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
   // TODO: resetToken type
   const resetToken = useParams<any>().resetToken;
   const history = useHistory();
 
+  const { isLoading, error, clearError, onSubmit } = useAuthRequest();
   const [formState, inputChangeHandler] = useForm(
     {
       password: {
@@ -35,26 +34,9 @@ const NewPasswordForm = () => {
     false
   );
 
-  const resetSubmitHandler = async (
-    event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    event.preventDefault();
-
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/resetPassword/${resetToken}`,
-        'PATCH',
-        JSON.stringify({
-          password: formState.inputs.password.value,
-          passwordConfirm: formState.inputs.passwordConfirm.value,
-        }),
-        {
-          'Content-Type': 'application/json',
-        }
-      );
-
-      history.push('/');
-    } catch (err) {}
+  const newPasswordSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    onSubmit(formState, 'resetPassword', e, resetToken);
+    history.push('/');
   };
 
   return (
@@ -68,7 +50,10 @@ const NewPasswordForm = () => {
             Enter a new password.
           </p>
         </header>
-        <form onSubmit={resetSubmitHandler} className="new-password-form__form">
+        <form
+          onSubmit={newPasswordSubmitHandler}
+          className="new-password-form__form"
+        >
           <Input
             element="input"
             id="password"

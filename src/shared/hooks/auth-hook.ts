@@ -1,5 +1,8 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { useHttpClient } from '../hooks/http-hook';
+import { AuthContext } from '../context/auth-context';
 import { UserProps } from '../types/types';
 
 let logoutTimer: ReturnType<typeof setTimeout>;
@@ -83,4 +86,64 @@ export const useAuth = () => {
   }, [login]);
 
   return { token, login, logout, user, update };
+};
+
+export const useAuthRequest = () => {
+  const auth = useContext(AuthContext);
+  const { login } = auth;
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  // TODO: TYPE
+  const onSubmit = async (
+    formState: any,
+    mode: string,
+    e: React.FormEvent<HTMLFormElement>,
+    resetToken?: string
+  ): Promise<void> => {
+    e.preventDefault();
+
+    let method: string = 'POST',
+      body: string;
+    if (mode === 'login') {
+      body = JSON.stringify({
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value,
+      });
+    } else if (mode === 'signup') {
+      body = JSON.stringify({
+        email: formState.inputs.email.value,
+        firstName: formState.inputs.firstName.value,
+        lastName: formState.inputs.lastName.value,
+        password: formState.inputs.password.value,
+        passwordConfirm: formState.inputs.passwordConfirm.value,
+      });
+    } else if (mode === 'forgotPassword') {
+      body = JSON.stringify({
+        email: formState.inputs.email.value,
+      });
+    } else {
+      method = 'PATCH';
+      body = JSON.stringify({
+        password: formState.inputs.password.value,
+        passwordConfirm: formState.inputs.passwordConfirm.value,
+      });
+    }
+
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/users/${mode}${
+          resetToken ? `/${resetToken}` : ''
+        }`,
+        method,
+        body,
+        {
+          'Content-Type': 'application/json',
+        }
+      );
+
+      login(responseData.data.user, responseData.token);
+    } catch (err) {}
+  };
+
+  return { isLoading, error, clearError, onSubmit };
 };

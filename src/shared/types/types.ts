@@ -1,3 +1,22 @@
+// /**
+//  * Login related types
+//  */
+// export interface LoginProps {
+//   email: string;
+//   password: string;
+// }
+
+// /**
+//  * Sign up related types
+//  */
+// export interface SignupProps {
+//   email: string;
+//   firstName: string;
+//   lastName: string;
+//   password: string;
+//   passwordConfirm: string;
+// }
+
 /**
  * User related types
  */

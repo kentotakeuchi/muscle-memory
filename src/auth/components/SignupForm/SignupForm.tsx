@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React from 'react';
 
 import './SignupForm.scss';
 import Input from '../../../shared/components/FormElements/Input/Input';
@@ -10,17 +10,14 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
 } from '../../../shared/util/validators';
+import { useAuthRequest } from '../../../shared/hooks/auth-hook';
 import { useForm } from '../../../shared/hooks/form-hook';
-import { useHttpClient } from '../../../shared/hooks/http-hook';
-import { AuthContext } from '../../../shared/context/auth-context';
 
 const SignupForm = () => {
-  const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-
+  const { isLoading, error, clearError, onSubmit } = useAuthRequest();
   const [formState, inputChangeHandler] = useForm(
     {
-      emailSignup: {
+      email: {
         value: '',
         isValid: false,
       },
@@ -32,7 +29,7 @@ const SignupForm = () => {
         value: '',
         isValid: false,
       },
-      passwordSignup: {
+      password: {
         value: '',
         isValid: false,
       },
@@ -44,40 +41,19 @@ const SignupForm = () => {
     false
   );
 
-  const signupSubmitHandler = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-    try {
-      const responseData = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
-        'POST',
-        JSON.stringify({
-          email: formState.inputs.emailSignup.value,
-          firstName: formState.inputs.firstName.value,
-          lastName: formState.inputs.lastName.value,
-          password: formState.inputs.passwordSignup.value,
-          passwordConfirm: formState.inputs.passwordConfirm.value,
-        }),
-        {
-          'Content-Type': 'application/json',
-        }
-      );
-
-      auth.login(responseData.data.user, responseData.token);
-    } catch (err) {}
-  };
-
   return (
-    <Fragment>
+    <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
       <section className="signup-form">
         {isLoading && <LoadingSpinner asOverlay />}
         {/* <h1 className="signup-form__title">sign up</h1> */}
-        <form onSubmit={signupSubmitHandler} className="signup-form__form">
+        <form
+          onSubmit={(e) => onSubmit(formState, 'signup', e)}
+          className="signup-form__form"
+        >
           <Input
             element="input"
-            id="emailSignup"
+            id="email"
             type="email"
             label="email"
             placeholder="Email"
@@ -111,7 +87,7 @@ const SignupForm = () => {
 
           <Input
             element="input"
-            id="passwordSignup"
+            id="password"
             type="password"
             label="passowrd"
             placeholder="Password"
@@ -136,7 +112,7 @@ const SignupForm = () => {
           </Button>
         </form>
       </section>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

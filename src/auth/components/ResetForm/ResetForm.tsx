@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './ResetForm.scss';
@@ -7,20 +7,18 @@ import Button from '../../../shared/components/FormElements/Button/Button';
 import ErrorModal from '../../../shared/components/UIElements/ErrorModal/ErrorModal';
 import LoadingSpinner from '../../../shared/components/UIElements/LoadingSpinner/LoadingSpinner';
 import { VALIDATOR_EMAIL } from '../../../shared/util/validators';
+import { useAuthRequest } from '../../../shared/hooks/auth-hook';
 import { useForm } from '../../../shared/hooks/form-hook';
-import { useHttpClient } from '../../../shared/hooks/http-hook';
-import { AuthContext } from '../../../shared/context/auth-context';
 
 ////////////////////////////////////////
 const ResetForm = () => {
   // to replace reset form with done message
   const [isSent, setIsSent] = useState<boolean>(false);
 
-  const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, clearError, onSubmit } = useAuthRequest();
   const [formState, inputChangeHandler] = useForm(
     {
-      emailReset: {
+      email: {
         value: '',
         isValid: false,
       },
@@ -28,25 +26,9 @@ const ResetForm = () => {
     false
   );
 
-  const resetSubmitHandler = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    try {
-      const responseData = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/users/forgotPassword`,
-        'POST',
-        JSON.stringify({
-          email: formState.inputs.emailReset.value,
-        }),
-        {
-          'Content-Type': 'application/json',
-        }
-      );
-
-      setIsSent(true);
-      auth.login(responseData.data.admin, responseData.token);
-    } catch (err) {}
+  const resetSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    setIsSent(true);
+    onSubmit(formState, 'forgotPassword', e);
   };
 
   return (
@@ -68,7 +50,7 @@ const ResetForm = () => {
           <form onSubmit={resetSubmitHandler} className="reset-form__form">
             <Input
               element="input"
-              id="emailReset"
+              id="email"
               type="email"
               label="email"
               placeholder="Email"
