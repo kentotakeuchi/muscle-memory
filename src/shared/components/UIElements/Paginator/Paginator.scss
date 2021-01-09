@@ -17,14 +17,32 @@
     text-transform: uppercase;
 
     @include respond(phone) {
-      font-size: 3rem;
+      grid-auto-flow: row;
+      row-gap: 1ch;
+      font-size: 3.5rem;
     }
   }
 
+  &__control:first-child {
+  }
   &__number {
+  }
+  &__control:last-child {
   }
 
   &__number--active {
     border-bottom: 1px solid $color-primary;
+
+    @include respond(phone) {
+      border-bottom: none;
+    }
+
+    &::after {
+      @include respond(phone) {
+        content: '👈🏽';
+        position: absolute;
+        padding-left: 15px;
+      }
+    }
   }
 }
